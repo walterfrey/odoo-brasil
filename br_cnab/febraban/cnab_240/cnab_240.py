@@ -86,13 +86,10 @@ class Cnab240(Cnab):
             'cedente_agencia_dv': self.order.payment_mode_id.
             bank_account_id.bra_number_dig,
             'cedente_nome': self.order.payment_mode_id.company_id.legal_name,
-            # DV ag e conta
-            'cedente_dv_ag_cc': (self.order.payment_mode_id.
-                                 bank_account_id.bra_number_dig),
             'arquivo_codigo': 1,  # Remessa/Retorno
             'servico_operacao': u'R',
-            'nome_banco': unicode(self.order.payment_mode_id.bank_account_id.
-                                  bank_name)
+            'nome_do_banco': unicode(
+                self.order.payment_mode_id.bank_account_id.bank_name)
         }
 
     def get_file_numeration(self):
