@@ -112,8 +112,17 @@ class InutilizedNfe(models.Model):
                                 resposta['received_xml'])
         if hasattr(resposta['object'].Body, 'Fault'):
             raise UserError(u'Não foi possível concluir a operação.')
-        inf_inut = resposta['object'].Body.nfeInutilizacaoNF2Result.\
-            retInutNFe.infInut
+        
+        #inf_inut = resposta['object'].Body.nfeInutilizacaoNF2Result.\
+        #    retInutNFe.infInut
+        
+        if self.env.user.company_id.state_id.code in ('PR'):
+            inf_inut = resposta['object'].Body.nfeInutilizacaoNFResult.\
+                retInutNFe.infInut
+        else:
+            inf_inut = resposta['object'].Body.nfeInutilizacaoNF2Result.\
+                retInutNFe.infInut
+                
         status = inf_inut.cStat
         if status == 102:
             self.state = 'done'
