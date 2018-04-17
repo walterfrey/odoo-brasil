@@ -767,8 +767,12 @@ class InvoiceEletronic(models.Model):
             while True:
                 time.sleep(2)
                 resposta_recibo = retorno_autorizar_nfe(certificado, **obj)
-                retorno = resposta_recibo['object'].Body.\
-                    nfeRetAutorizacaoLoteResult.retConsReciNFe
+                if self.company_id.partner_id.state_id.code in ('PR'):
+                    retorno = resposta_recibo['object'].Body.\
+                        nfeRetAutorizacaoResult.retConsReciNFe
+                else:
+                    retorno = resposta_recibo['object'].Body.\
+                        nfeRetAutorizacaoLoteResult.retConsReciNFe
                 if retorno.cStat != 105:
                     break
 
